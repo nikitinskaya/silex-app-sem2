@@ -9,6 +9,7 @@ $app->get('/hello/{name}', function ($name) use ($app) {
 });
 
 $app->get('/', function () {
+  date_default_timezone_set('Europe/Moscow');
   return '<h1>'.date("d/m/Y h:i\n").'</h1>';
 });
 
