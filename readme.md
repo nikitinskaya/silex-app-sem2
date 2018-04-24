@@ -16,6 +16,7 @@
 
 `/print`
 
+invert a byte: `echo -e '0xa7' | curl -X POST --data-binary @- localhost:8080/byte`
 
 
 

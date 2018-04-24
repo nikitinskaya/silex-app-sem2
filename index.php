@@ -36,4 +36,8 @@
     return '<h1>'.$result->query->results->channel->item->forecast[1]->low.'</h1>';
   });
 
+  $app->post('/byte', function() {
+    return ~(file_get_contents("php://input"))."\n";
+  });
+
   $app->run();
