@@ -38,11 +38,11 @@ $app->get('/weather', function () {
 });
 
 $app->post('/byte', function() {
-    return new Response(~(file_get_contents("php://input"))."\n", 200, array(
+    $str = pack("C*", (~(unpack("C*", file_get_contents("php://input"))[1])));
+    return new Response($str, 200, array(
     'Access-Control-Allow-Origin' => '*',
     'Access-Control-Allow-Methods' => 'GET,POST,DELETE',
-    'Access-Control-Allow-Headers' => 'Content-Type, Access-Control-Allow-Headers',
-    'Content-Type' => 'application/json'
+    'Access-Control-Allow-Headers' => 'Content-Type, Access-Control-Allow-Headers'
   ));
 });
 
