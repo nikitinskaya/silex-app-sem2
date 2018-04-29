@@ -19,15 +19,20 @@ $app->get('/info', function () {
 });
 
 $app->get('/author', function () {
-  return new Response('<h4 id="author" title="GossJS">Вера Никитинская</h4>', 200, array(
-    'Access-Control-Allow-Origin' => '*',
-    'Access-Control-Allow-Methods' => 'GET,POST,DELETE',
-    'Access-Control-Allow-Headers' => 'Content-Type, Access-Control-Allow-Headers'
-  ));
+  return '<h4 id="author" title="GossJS">Вера Никитинская</h4>';
+})->after(function (Request $request, Response $response) {
+  $response->headers->set('Access-Control-Allow-Origin', '*');
+  $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,DELETE');
+  $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
 });
 
 $app->get('/print', function () {
-  return new Response((file_get_contents(basename(__FILE__))), 200, array('Content-type' => 'text/plain'));
+  return (file_get_contents(basename(__FILE__)));
+})->after(function (Request $request, Response $response) {
+  $response->headers->set('Content-type', 'text/plain');
+  $response->headers->set('Access-Control-Allow-Origin', '*');
+  $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,DELETE');
+  $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
 });
 
 $app->get('/weather', function () {
@@ -39,12 +44,11 @@ $app->get('/weather', function () {
 });
 
 $app->post('/byte', function() {
-    $str = pack("C*", (~(unpack("C*", file_get_contents("php://input"))[1])));
-    return new Response($str, 200, array(
-    'Access-Control-Allow-Origin' => '*',
-    'Access-Control-Allow-Methods' => 'GET,POST,DELETE',
-    'Access-Control-Allow-Headers' => 'Content-Type, Access-Control-Allow-Headers'
-  ));
+  return pack("C*", (~(unpack("C*", file_get_contents("php://input"))[1])));
+})->after(function (Request $request, Response $response) {
+  $response->headers->set('Access-Control-Allow-Origin', '*');
+  $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,DELETE');
+  $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
 });
 
 $app->get('/rates', function () {
@@ -87,9 +91,10 @@ $app->get('/rates', function () {
   });
   return imagepng($ctx);
 })->after(function (Request $request, Response $response) {
-        $response->headers->set('Content-type', 'image/png');
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-        $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,DELETE');
+  $response->headers->set('Content-type', 'image/png');
+  $response->headers->set('Access-Control-Allow-Origin', '*');
+  $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,DELETE');
+  $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
 });
 
 $app->run();
