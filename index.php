@@ -97,46 +97,81 @@ $app->get('/rates', function () {
   $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
 });
 
-$app->get('/add/{a}/{b}', function($a, $b) {
-  $result = $a + $b;
-  return '<h1>Сумма:</h1><h2><span>'. $result .'</span></h2>';
-})->after(function (Request $request, Response $response) {
-  $response->headers->set('Access-Control-Allow-Origin', '*');
-  $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,DELETE');
-  $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
-});
-
-$app->get('/sub/{a}/{b}', function($a, $b) {
-  $result = $a - $b;
-  return '<h1>Разность:</h1><h2><span>'. $result .'</span></h2>';
-})->after(function (Request $request, Response $response) {
-  $response->headers->set('Access-Control-Allow-Origin', '*');
-  $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,DELETE');
-  $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
-});
-
-$app->get('/mpy/{a}/{b}', function($a, $b) {
-  $result = $a * $b;
-  return '<h1>Произведение:</h1><h2><span>'. $result .'</span></h2>';
-})->after(function (Request $request, Response $response) {
-  $response->headers->set('Access-Control-Allow-Origin', '*');
-  $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,DELETE');
-  $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
-});
-
-$app->get('/div/{a}/{b}', function($a, $b) {
-  $result = $a / $b;
-  return '<h1>Частное:</h1><h2><span>'. $result .'</span></h2>';
-})->after(function (Request $request, Response $response) {
-  $response->headers->set('Access-Control-Allow-Origin', '*');
-  $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,DELETE');
-  $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
-});
-
-$app->get('/pow/{a}/{b}', function($a, $b) {
+$app->get('/add/{a}/{b}', function(Request $request, $a, $b) {
   $result = $a ** $b;
-  return '<h1>Степень:</h1><h2><span>'. $result .'</span></h2>';
+  if (($request->headers->get('content_type')) == 'application/json') {
+      return json_encode(array( 'Сумма' => $result ));
+    } else {
+      return '<h1>Сумма:</h1><h2><span>'. $result .'</span></h2>';
+    }
 })->after(function (Request $request, Response $response) {
+  if (($request->headers->get('content_type')) == 'application/json') {
+    $response->headers->set('Content-type', 'application/json; charset=utf-8');
+  }
+  $response->headers->set('Access-Control-Allow-Origin', '*');
+  $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,DELETE');
+  $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
+});
+
+$app->get('/sub/{a}/{b}', function(Request $request, $a, $b) {
+  $result = $a - $b;
+  if (($request->headers->get('content_type')) == 'application/json') {
+      return json_encode(array( 'Разность' => $result ));
+    } else {
+      return '<h1>Разность:</h1><h2><span>'. $result .'</span></h2>';
+    }
+})->after(function (Request $request, Response $response) {
+  if (($request->headers->get('content_type')) == 'application/json') {
+    $response->headers->set('Content-type', 'application/json; charset=utf-8');
+  }
+  $response->headers->set('Access-Control-Allow-Origin', '*');
+  $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,DELETE');
+  $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
+});
+
+$app->get('/mpy/{a}/{b}', function(Request $request, $a, $b) {
+  $result = $a * $b;
+  if (($request->headers->get('content_type')) == 'application/json') {
+      return json_encode(array( 'Произведение' => $result ));
+    } else {
+      return '<h1>Произведение:</h1><h2><span>'. $result .'</span></h2>';
+    }
+})->after(function (Request $request, Response $response) {
+  if (($request->headers->get('content_type')) == 'application/json') {
+    $response->headers->set('Content-type', 'application/json; charset=utf-8');
+  }
+  $response->headers->set('Access-Control-Allow-Origin', '*');
+  $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,DELETE');
+  $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
+});
+
+$app->get('/div/{a}/{b}', function(Request $request, $a, $b) {
+  $result = $a / $b;
+  if (($request->headers->get('content_type')) == 'application/json') {
+      return json_encode(array( 'Частное' => $result ));
+    } else {
+      return '<h1>Частное:</h1><h2><span>'. $result .'</span></h2>';
+    }
+})->after(function (Request $request, Response $response) {
+  if (($request->headers->get('content_type')) == 'application/json') {
+    $response->headers->set('Content-type', 'application/json; charset=utf-8');
+  }
+  $response->headers->set('Access-Control-Allow-Origin', '*');
+  $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,DELETE');
+  $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
+});
+
+$app->get('/pow/{a}/{b}', function(Request $request, $a, $b) {
+  $result = $a ** $b;
+  if (($request->headers->get('content_type')) == 'application/json') {
+      return json_encode(array( 'Степень' => $result ));
+    } else {
+      return '<h1>Степень:</h1><h2><span>'. $result .'</span></h2>';
+    }
+})->after(function (Request $request, Response $response) {
+  if (($request->headers->get('content_type')) == 'application/json') {
+    $response->headers->set('Content-type', 'application/json; charset=utf-8');
+  }
   $response->headers->set('Access-Control-Allow-Origin', '*');
   $response->headers->set('Access-Control-Allow-Methods', 'GET,POST,DELETE');
   $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers');
